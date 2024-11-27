@@ -1,12 +1,14 @@
-package com.busanit501.firstpractice.User;
+package com.busanit501.firstpractice.User.VO;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.Date;
 
 @Getter
-@AllArgsConstructor
+@Builder
+@ToString
 public class UserVO {
     private int userNo;
     private String userID;

@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>회원가입</title>
+    <title>로그인</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,25 +67,22 @@
 </head>
 <body>
 <div class="form-container">
-    <h2>회원가입</h2>
+    <h2>로그인</h2>
     <!-- 에러 메시지가 있으면 출력 -->
     <c:if test="${not empty error}">
         <div class="error-message">${error}</div>
     </c:if>
-    <form action="/user/register" method="post">
+    <form action="/user/logIn" method="post">
         <label for="userID">아이디</label>
         <input type="text" id="userID" name="userID" placeholder="아이디를 입력하세요" required />
 
         <label for="userPassword">비밀번호</label>
         <input type="password" id="userPassword" name="userPassword" placeholder="비밀번호를 입력하세요" required />
 
-        <label for="userName">이름</label>
-        <input type="text" id="userName" name="userName" placeholder="이름을 입력하세요" required />
-
-        <input type="submit" value="회원가입" />
+        <input type="submit" value="로그인" />
     </form>
-    <form action="/user/userView" method="post">
-        <input type="submit" value="전체보기" />
+    <form action="/user/register" method="get">
+        <input type="submit" value="회원가입"/>
     </form>
 </div>
 </body>

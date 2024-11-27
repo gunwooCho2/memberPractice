@@ -6,8 +6,12 @@
 </head>
 <body>
 <h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+    <h1><%= "Hello World!" %>
+        <h1><%= "Hello World!22" %>
+        </h1>
+        <br/>
+        <form action="/user/userView" method="post">
+            <input type="submit" value="user페이지"></input>
+        </form>
 </body>
 </html>
