@@ -101,6 +101,9 @@
         <form action="/user/delete?userNo=${userVO.userNo}" method="post" style="display:inline;">
             <button type="submit" class="delete-button">삭제</button>
         </form>
+        <form action="/user/logout" method="post" style="display:inline;">
+            <button type="submit" class="logout-button">로그아웃</button>
+        </form>
     </div>
 </div>
 </body>
