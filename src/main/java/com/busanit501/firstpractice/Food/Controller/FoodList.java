@@ -1,4 +1,6 @@
-package com.busanit501.firstpractice.Food;
+package com.busanit501.firstpractice.Food.Controller;
+
+import com.busanit501.firstpractice.Food.Service.FoodService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -6,16 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @WebServlet (name = "foodList", urlPatterns = "/food/list")
-public class Controller extends HttpServlet {
+public class FoodList extends HttpServlet {
+    private final FoodService service = FoodService.INSTANCE;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<FoodDTO> foodlist = FoodServiece.INSTANCE.listAll();
-        request.setAttribute("foodList", foodlist);
-        request.getRequestDispatcher("/WEB-INF/Food.jsp")
+        request.setAttribute("foodList", service.getFoodViewDTOList());
+        request.getRequestDispatcher("/WEB-INF/Food/foodList.jsp")
                 .forward(request, response);
     }
 }

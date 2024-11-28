@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: alex6
-  Date: 24. 11. 26.
-  Time: 오후 12:19
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -41,12 +34,17 @@
         }
         .form-container input[type="text"],
         .form-container input[type="password"],
+        .form-container input[type="checkbox"],
         .form-container input[type="submit"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
+        }
+        .form-container input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
         }
         .form-container input[type="submit"] {
             background-color: #4CAF50;
@@ -62,6 +60,11 @@
             font-size: 0.9em;
             margin-bottom: 15px;
             text-align: center;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
         }
     </style>
 </head>
@@ -79,6 +82,11 @@
         <label for="userPassword">비밀번호</label>
         <input type="password" id="userPassword" name="userPassword" placeholder="비밀번호를 입력하세요" required />
 
+        <div class="checkbox-container">
+            <input type="checkbox" id="autoLogin" name="autoLogin" value="true" />
+            <label for="autoLogin">자동 로그인</label>
+        </div>
+
         <input type="submit" value="로그인" />
     </form>
     <form action="/user/register" method="get">
@@ -87,4 +95,3 @@
 </div>
 </body>
 </html>
-

@@ -4,12 +4,15 @@ import com.busanit501.firstpractice.User.DAO.UserDAO;
 import com.busanit501.firstpractice.User.DTO.LoginDTO;
 import com.busanit501.firstpractice.User.DTO.RegisterDTO;
 import com.busanit501.firstpractice.User.VO.UserVO;
+import com.busanit501.firstpractice.Utill.MapperUtil;
+import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 
 public enum UserService {
     INSTANCE;
     private final UserDAO userDAO = UserDAO.INSTANCE;
+    private final ModelMapper modelMapper = MapperUtil.INSTANCE.getModelMapper();
 
     public String duplicatesCheck(RegisterDTO registerDTO) {
         String errorMessage = "";
@@ -49,7 +52,19 @@ public enum UserService {
         return UserDAO.INSTANCE.deleteUser(userNo);
     }
 
-    public boolean logInUser(LoginDTO loginDTO) {
-        return UserDAO.INSTANCE.logInUser(loginDTO) != -1;
+    public int logInUser(LoginDTO loginDTO) {
+        return UserDAO.INSTANCE.logInUser(loginDTO);
+    }
+
+    public String getUserUUID(int userNo) {
+        return UserDAO.INSTANCE.getUserUUID(userNo);
+    }
+
+    public RegisterDTO getRegDTOToUUID(String UUID) {
+        return modelMapper.map(UserDAO.INSTANCE.getUserVOToUUID(UUID), RegisterDTO.class);
+    }
+
+    public boolean isUserName(String UserName) {
+        return UserDAO.INSTANCE.isUserName(UserName);
     }
 }

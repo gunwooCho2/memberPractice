@@ -84,6 +84,9 @@
 
         <input type="submit" value="회원가입" />
     </form>
+    <form action="/user/logIn" method="get">
+        <input type="submit" value="로그인" />
+    </form>
     <form action="/user/userView" method="post">
         <input type="submit" value="전체보기" />
     </form>

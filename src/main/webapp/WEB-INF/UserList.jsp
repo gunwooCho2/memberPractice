@@ -19,6 +19,18 @@
             margin: 0;
             padding: 20px;
         }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #fff;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
         .food-list-container {
             max-width: 800px;
             margin: 50px auto;
@@ -51,7 +63,7 @@
 </head>
 <body>
 <div class="food-list-container">
-    <h2>User List</h2>
+    <h2>${loginInfo.userName}님 환영합니다.</h2>
     <table class="food-table">
         <thead>
         <tr>
@@ -68,6 +80,9 @@
         </c:forEach>
         </tbody>
     </table>
+    <form action="/food/list" method="get">
+        <button type="submit">FoodList로 가기</button>
+    </form>
 </div>
 </body>
 </html>

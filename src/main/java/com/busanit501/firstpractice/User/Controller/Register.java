@@ -36,8 +36,6 @@ public class Register extends HttpServlet {
         String guide = service.duplicatesCheck(registerDTO);
         if (guide.isEmpty()) {
             service.insertUser(registerDTO);
-            LoginDTO loginDTO = modelMapper.map(registerDTO, LoginDTO.class);
-            request.getSession().setAttribute("loginInfo", loginDTO);
             response.sendRedirect("/user/logIn");
             return;
         }

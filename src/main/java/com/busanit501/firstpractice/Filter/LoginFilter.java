@@ -1,35 +1,53 @@
 package com.busanit501.firstpractice.Filter;
 
+import com.busanit501.firstpractice.User.DTO.RegisterDTO;
+import com.busanit501.firstpractice.User.Serviece.UserService;
+import com.busanit501.firstpractice.Utill.CookieUtil;
 import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Log4j2
-@WebFilter (urlPatterns = {"/user/*"})
+@WebFilter (urlPatterns = {"/*"})
 public class LoginFilter implements Filter {
+    private CookieUtil cookieUtil = CookieUtil.INSTANCE;
+    private UserService userService = UserService.INSTANCE;
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        log.info("doFilter ,/todo/* 하위로 들어오는 모든 url 에 대해서 로그인 체크함");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
 
+        ArrayList<String> uris = new ArrayList<>(Arrays.asList("/user/logIn", "/user/register", "/"));
+        Cookie loginCookie = cookieUtil.getCookie(request.getCookies(), "loginInfo");
+
         String uri = request.getRequestURI();
-        if (uri.equals("/user/logIn") || uri.equals("/user/register")) {
+        if (uris.contains(uri)) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
         if (session.isNew()) {
-            response.sendRedirect("/user/register");
-            return;
+            if (loginCookie != null) return;
         }
+
         if (session.getAttribute("loginInfo") == null) {
+            if (loginCookie != null) {
+                RegisterDTO registerDTO = userService.getRegDTOToUUID(loginCookie.getValue());
+                if (registerDTO != null) {
+                    session.setAttribute("loginInfo", registerDTO);
+                    filterChain.doFilter(servletRequest, servletResponse);
+                }
+            }
             response.sendRedirect("/user/logIn");
             return;
         }

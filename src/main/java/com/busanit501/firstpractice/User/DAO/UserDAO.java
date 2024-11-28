@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public enum UserDAO {
     INSTANCE;
@@ -18,8 +19,9 @@ public enum UserDAO {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public boolean insertUser(RegisterDTO registerDTO) {
-        String sql = "insert into userTable (userID, userPassword, userName) values(?,?,?)";
-        ArrayList<Object> params = new ArrayList<>(Arrays.asList(registerDTO.getUserID(), registerDTO.getUserPassword(), registerDTO.getUserName()));
+        String sql = "insert into userTable (userID, userPassword, userName, userUUID) values(?,?,?,?)";
+        String userUUID = UUID.randomUUID().toString() + "-" + registerDTO.getUserID();
+        ArrayList<Object> params = new ArrayList<>(Arrays.asList(registerDTO.getUserID(), registerDTO.getUserPassword(), registerDTO.getUserName(), userUUID));
         return dao.executeUpdate(sql, params) != -1;
     }
 
@@ -90,5 +92,25 @@ public enum UserDAO {
                 .userPassword(data.get(2))
                 .userName(data.get(3))
                 .registerDate(dateFormat.parse(data.get(4))).build();
+    }
+
+    public String getUserUUID(int userNo) {
+        String sql = "select userUUID from userTable where userNo = ?";
+        ArrayList<Object> params = new ArrayList<>(List.of(userNo));
+        return dao.getData(sql, params).getTableData().get(0).get(0);
+    }
+
+    public UserVO getUserVOToUUID(String userUUID) {
+        String sql = "select * from userTable where userUUID = ?";
+        ArrayList<Object> params = new ArrayList<>(List.of(userUUID));
+        TableData data = dao.getData(sql, params);
+        if (!data.isData()) return null;
+        return dataToUserVO(data.getTableData().get(0));
+    }
+
+    public boolean isUserName(String userName) {
+        String sql = "select userName from userTable where userName = ?";
+        ArrayList<Object> params = new ArrayList<>(List.of(userName));
+        return dao.getData(sql, params).isData();
     }
 }

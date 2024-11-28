@@ -15,4 +15,5 @@ public class UserVO {
     private String userPassword;
     private String userName;
     private Date registerDate;
+    private String userUUID;
 }

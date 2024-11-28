@@ -57,4 +57,19 @@ public class UserTest {
     public void loginUser() {
         service.logInUser(loginDTO);
     }
+
+    @Test
+    public void getUUID() {
+        log.info(UserDAO.INSTANCE.getUserUUID(1));
+    }
+
+    @Test
+    public void getUserVoToUUID() {
+        log.info(UserDAO.INSTANCE.getUserVOToUUID(UserDAO.INSTANCE.getUserUUID(1)));
+    }
+
+    @Test
+    public void isUserName() {
+        log.info(service.isUserName("박신례"));
+    }
 }
